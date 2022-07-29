@@ -1,3 +1,15 @@
-.starter {
-  font-size: 18px;
+.App {
+  font-family: "Rubik", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+
+  &__title {
+    text-transform: uppercase;
+  }
 }
