@@ -1,28 +1,36 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const AddDeliveryForm = ({ addDelivery }) => {
-  const [cityFrom, setCityFrom] = useState('');
-  const [cityTo, setCityTo] = useState('');
-  const [parcelType, setParcelType] = useState('');
-  const [dateOfDispatch, setDateOfDispatch] = useState('');
-  const [parcelDescription, setParcelDescription] = useState('');
+export const EditDeliveryForm = ({
+  delivery,
+  editDelivery,
+  deleteDelivery,
+  setEditable,
+  setEditing,
+}) => {
+  const [cityFrom, setCityFrom] = useState(delivery.cityFrom);
+  const [cityTo, setCityTo] = useState(delivery.cityTo);
+  const [parcelType, setParcelType] = useState(delivery.parcelType);
+  const [dateOfDispatch, setDateOfDispatch] = useState(delivery.dateOfDispatch);
+  const [
+    parcelDescription,
+    setParcelDescription,
+  ] = useState(delivery.parcelDescription);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   return (
     <form
       onSubmit={() => {
-        addDelivery(
+        editDelivery(
+          delivery.id,
           cityFrom,
           cityTo,
           parcelType,
           dateOfDispatch,
           parcelDescription,
         );
-        setCityFrom('');
-        setCityTo('');
-        setParcelType('');
-        setDateOfDispatch('');
-        setParcelDescription('');
+        setEditable(false);
+        setEditing(false);
       }}
     >
       <div className="mb-3">
@@ -98,6 +106,7 @@ export const AddDeliveryForm = ({ addDelivery }) => {
           id="dateOfDispatch"
           min="2022-08-01"
           max="2022-12-31"
+          value={dateOfDispatch}
           onChange={(event) => {
             setDateOfDispatch(event.target.value);
           }}
@@ -147,21 +156,85 @@ export const AddDeliveryForm = ({ addDelivery }) => {
         />
       </div>
 
-      <button
-        type="submit"
-        className="btn btn-outline-success mb-2"
-        style={{ width: '100%' }}
-      >
-        APPLY
-      </button>
+      {confirmDelete ? (
+        <>
+          <h5
+            className="mb-3"
+            style={{ textAlign: 'center' }}
+          >
+            ARE YOU SURE?
+          </h5>
+          <div
+            className="btn-group mb-2"
+            role="group"
+            style={{ width: '100%' }}
+          >
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                deleteDelivery(delivery.id);
+                setEditable(false);
+                setEditing(false);
+              }}
+            >
+              YES
+            </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                setConfirmDelete(false);
+              }}
+            >
+              NO
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <button
+            type="submit"
+            className="btn btn-success mb-3"
+            style={{ width: '100%' }}
+          >
+            SAVE
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-danger mb-2"
+            style={{ width: '100%' }}
+            onClick={() => {
+              setConfirmDelete(true);
+            }}
+          >
+            DELETE
+          </button>
+        </>
+      )}
     </form>
   );
 };
 
-AddDeliveryForm.propTypes = {
-  addDelivery: PropTypes.func,
+EditDeliveryForm.propTypes = {
+  delivery: PropTypes.shape({
+    id: PropTypes.number,
+    cityFrom: PropTypes.string,
+    cityTo: PropTypes.string,
+    parcelType: PropTypes.string,
+    dateOfDispatch: PropTypes.string,
+    parcelDescription: PropTypes.string,
+  }),
+  editDelivery: PropTypes.func,
+  deleteDelivery: PropTypes.func,
+  setEditable: PropTypes.func,
+  setEditing: PropTypes.func,
 };
 
-AddDeliveryForm.defaultProps = {
-  addDelivery: () => {},
+EditDeliveryForm.defaultProps = {
+  delivery: {},
+  editDelivery: () => {},
+  deleteDelivery: () => {},
+  setEditable: () => {},
+  setEditing: () => {},
 };

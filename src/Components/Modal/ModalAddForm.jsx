@@ -6,7 +6,7 @@ export const ModalAddForm = ({ addDelivery }) => (
   <>
     <button
       type="button"
-      className="btn btn-outline-success"
+      className="btn btn-success"
       data-bs-toggle="modal"
       data-bs-target="#staticBackdrop"
       style={{ width: '80%' }}
