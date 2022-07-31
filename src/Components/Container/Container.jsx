@@ -27,6 +27,40 @@ export const Container = () => {
     setDelivery([newDelivery, ...deliveries]);
   };
 
+  const editDelivery = (
+    id,
+    cityFrom,
+    cityTo,
+    parcelType,
+    dateOfDispatch,
+    parcelDescription,
+  ) => {
+    const editedDelivery = {
+      id,
+      cityFrom,
+      cityTo,
+      parcelType,
+      dateOfDispatch,
+      parcelDescription,
+    };
+
+    setDelivery(
+      deliveries.map((delivery) => {
+        if (delivery.id !== id) {
+          return delivery;
+        }
+
+        return editedDelivery;
+      }),
+    );
+  };
+
+  const deleteDelivery = (id) => {
+    setDelivery(
+      deliveries.filter(delivery => delivery.id !== id),
+    );
+  };
+
   return (
     <div className="Container">
       <h2 className="Container__title">
@@ -38,6 +72,8 @@ export const Container = () => {
           <DeliveriesList
             key={delivery.id}
             delivery={delivery}
+            editDelivery={editDelivery}
+            deleteDelivery={deleteDelivery}
           />
         ))
       ) : (

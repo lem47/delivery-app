@@ -36,13 +36,23 @@ export const AddDeliveryForm = ({ addDelivery }) => {
           type="text"
           className="form-control"
           id="cityFrom"
+          list="cities"
           placeholder="City"
           defaultValue={cityFrom}
           onChange={(event) => {
             setCityFrom(event.target.value);
           }}
+          pattern="Kyiv|Lviv|Odessa|Kharkiv|Dnipro"
+          autoComplete="off"
           required
         />
+        <datalist id="cities">
+          <option>Kyiv</option>
+          <option>Lviv</option>
+          <option>Odessa</option>
+          <option>Kharkiv</option>
+          <option>Dnipro</option>
+        </datalist>
       </div>
 
       <div className="mb-3">
@@ -56,13 +66,23 @@ export const AddDeliveryForm = ({ addDelivery }) => {
           type="text"
           className="form-control"
           id="cityTo"
+          list="cities"
           placeholder="City"
           value={cityTo}
           onChange={(event) => {
             setCityTo(event.target.value);
           }}
+          pattern="Kyiv|Lviv|Odessa|Kharkiv|Dnipro"
+          autoComplete="off"
           required
         />
+        <datalist id="cities">
+          <option>Kyiv</option>
+          <option>Lviv</option>
+          <option>Odessa</option>
+          <option>Kharkiv</option>
+          <option>Dnipro</option>
+        </datalist>
       </div>
 
       <div className="mb-4">
@@ -130,7 +150,7 @@ export const AddDeliveryForm = ({ addDelivery }) => {
         className="btn btn-outline-success"
         style={{ width: '100%' }}
       >
-        Apply
+        APPLY
       </button>
     </form>
   );
