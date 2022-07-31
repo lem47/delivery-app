@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { DeliveriesList } from '../DeliveriesList/DeliveriesList';
 import { ModalAddForm } from '../Modal/ModalAddForm';
@@ -7,6 +7,7 @@ import './Container.scss';
 
 export const Container = () => {
   const [deliveries, setDelivery] = useLocalStorage([], 'deliveries');
+  const [editing, setEditing] = useState(false);
 
   const addDelivery = (
     cityFrom,
@@ -63,15 +64,20 @@ export const Container = () => {
 
   return (
     <div className="Container">
-      <h2 className="Container__title">
-        My deliveries
-      </h2>
-      <ModalAddForm addDelivery={addDelivery} />
+      {!editing && (
+        <>
+          <h2 className="Container__title">
+            My deliveries
+          </h2>
+          <ModalAddForm addDelivery={addDelivery} />
+        </>
+      )}
       {deliveries ? (
         deliveries.map(delivery => (
           <DeliveriesList
             key={delivery.id}
             delivery={delivery}
+            setEditing={setEditing}
             editDelivery={editDelivery}
             deleteDelivery={deleteDelivery}
           />

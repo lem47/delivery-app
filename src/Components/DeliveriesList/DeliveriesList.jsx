@@ -1,10 +1,10 @@
-/* eslint-disable max-len */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { EditDeliveryForm } from '../EditDeliveryForm/EditDeliveryForm';
 
 export const DeliveriesList = ({
   delivery,
+  setEditing,
   editDelivery,
   deleteDelivery,
 }) => {
@@ -12,16 +12,21 @@ export const DeliveriesList = ({
 
   return (
     <div className="list-group" style={{ width: '80%' }}>
-      <div className="list-group-item list-group-item-action">
-        {editable ? (
+      {editable ? (
+        <div
+          className="list-group-item border-warning mt-4"
+        >
           <EditDeliveryForm
             delivery={delivery}
             editDelivery={editDelivery}
             deleteDelivery={deleteDelivery}
             setEditable={setEditable}
+            setEditing={setEditing}
           />
-        ) : (
-          <>
+        </div>
+      ) : (
+        <>
+          <div className="list-group-item list-group-item-action">
             <div className="d-flex w-100 justify-content-between">
               <h5 className="mb-3">
                 ROUTE:
@@ -30,11 +35,14 @@ export const DeliveriesList = ({
               </h5>
               <button
                 type="button"
-                className="btn btn-outline-warning"
+                className="btn btn-outline-warning mt-2"
                 style={{
                   height: 35, fontSize: 15,
                 }}
-                onClick={() => setEditable(true)}
+                onClick={() => {
+                  setEditable(true);
+                  setEditing(true);
+                }}
               >
                 EDIT
               </button>
@@ -48,9 +56,9 @@ export const DeliveriesList = ({
             <small className="text-muted">
               {`DATE OF DISPATCH: ${delivery.dateOfDispatch}`}
             </small>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -64,12 +72,14 @@ DeliveriesList.propTypes = {
     dateOfDispatch: PropTypes.string,
     parcelDescription: PropTypes.string,
   }),
+  setEditing: PropTypes.func,
   editDelivery: PropTypes.func,
   deleteDelivery: PropTypes.func,
 };
 
 DeliveriesList.defaultProps = {
   delivery: {},
+  setEditing: () => {},
   editDelivery: () => {},
   deleteDelivery: () => {},
 };
